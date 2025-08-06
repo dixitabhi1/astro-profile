@@ -1,53 +1,40 @@
 import { Canvas } from '@react-three/fiber';
-import { Float, Text, OrbitControls } from '@react-three/drei';
+import { Float, OrbitControls } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { Suspense, useRef } from 'react';
 import { Mesh } from 'three';
 
-const SkillOrb = ({ position, skill, color }: { 
+const SkillOrb = ({ position, color }: { 
   position: [number, number, number]; 
-  skill: string; 
   color: string; 
 }) => {
   const meshRef = useRef<Mesh>(null);
 
   return (
     <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
-      <group position={position}>
-        <mesh ref={meshRef}>
-          <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial 
-            color={color} 
-            transparent 
-            opacity={0.8}
-            wireframe={false}
-          />
-        </mesh>
-        <Text
-          position={[0, 0, 0.9]}
-          fontSize={0.3}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          font="/fonts/Space_Grotesk_Bold.json"
-        >
-          {skill}
-        </Text>
-      </group>
+      <mesh ref={meshRef} position={position}>
+        <sphereGeometry args={[0.6, 32, 32]} />
+        <meshStandardMaterial 
+          color={color} 
+          transparent 
+          opacity={0.7}
+          wireframe={false}
+        />
+      </mesh>
     </Float>
   );
 };
 
 const Skills3DScene = () => {
-  const skills = [
-    { name: 'Python', position: [-2, 2, 0] as [number, number, number], color: '#3776ab' },
-    { name: 'Java', position: [2, 1.5, -1] as [number, number, number], color: '#f89820' },
-    { name: 'Django', position: [-1, -1, 2] as [number, number, number], color: '#092e20' },
-    { name: 'Flask', position: [1.5, -1.5, 1] as [number, number, number], color: '#000000' },
-    { name: 'SQL', position: [0, 2.5, -2] as [number, number, number], color: '#00758f' },
-    { name: 'React', position: [-2.5, 0, 1] as [number, number, number], color: '#61dafb' },
-    { name: 'JavaScript', position: [2.5, 0, 0] as [number, number, number], color: '#f7df1e' },
-    { name: 'Cloud', position: [0, -2, 0] as [number, number, number], color: '#ff9900' },
+  const skillPositions = [
+    { position: [-2, 2, 0] as [number, number, number], color: '#3776ab' },
+    { position: [2, 1.5, -1] as [number, number, number], color: '#f89820' },
+    { position: [-1, -1, 2] as [number, number, number], color: '#092e20' },
+    { position: [1.5, -1.5, 1] as [number, number, number], color: '#000000' },
+    { position: [0, 2.5, -2] as [number, number, number], color: '#00758f' },
+    { position: [-2.5, 0, 1] as [number, number, number], color: '#61dafb' },
+    { position: [2.5, 0, 0] as [number, number, number], color: '#f7df1e' },
+    { position: [0, -2, 0] as [number, number, number], color: '#ff9900' },
   ];
 
   return (
@@ -55,15 +42,23 @@ const Skills3DScene = () => {
       <ambientLight intensity={0.6} />
       <pointLight position={[10, 10, 10]} intensity={1} />
       <pointLight position={[-10, -10, -10]} color="#9333ea" intensity={0.5} />
+      <pointLight position={[0, 0, 8]} color="#10b981" intensity={0.3} />
       
-      {skills.map((skill, index) => (
+      {skillPositions.map((skill, index) => (
         <SkillOrb
-          key={skill.name}
+          key={index}
           position={skill.position}
-          skill={skill.name}
           color={skill.color}
         />
       ))}
+      
+      {/* Central connecting lines/wireframe */}
+      <Float speed={0.5} rotationIntensity={0.2} floatIntensity={0.5}>
+        <mesh>
+          <octahedronGeometry args={[2.5, 2]} />
+          <meshStandardMaterial color="#9333ea" wireframe opacity={0.3} transparent />
+        </mesh>
+      </Float>
       
       <OrbitControls 
         enableZoom={false} 

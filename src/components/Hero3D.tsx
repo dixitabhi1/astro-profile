@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float, Text3D, Center } from '@react-three/drei';
+import { OrbitControls, Float } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { Suspense } from 'react';
 
@@ -7,7 +7,7 @@ const FloatingCube = ({ position, color }: { position: [number, number, number];
   return (
     <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
       <mesh position={position}>
-        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <boxGeometry args={[0.8, 0.8, 0.8]} />
         <meshStandardMaterial color={color} />
       </mesh>
     </Float>
@@ -18,8 +18,19 @@ const TechSphere = ({ position, color }: { position: [number, number, number]; c
   return (
     <Float speed={2} rotationIntensity={2} floatIntensity={1}>
       <mesh position={position}>
-        <sphereGeometry args={[0.3, 32, 32]} />
+        <sphereGeometry args={[0.4, 32, 32]} />
         <meshStandardMaterial color={color} wireframe />
+      </mesh>
+    </Float>
+  );
+};
+
+const CentralTorus = () => {
+  return (
+    <Float speed={1} rotationIntensity={0.5} floatIntensity={1}>
+      <mesh position={[0, 0, 0]}>
+        <torusGeometry args={[1.2, 0.3, 16, 100]} />
+        <meshStandardMaterial color="#9333ea" wireframe />
       </mesh>
     </Float>
   );
@@ -28,33 +39,20 @@ const TechSphere = ({ position, color }: { position: [number, number, number]; c
 const Scene3D = () => {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <pointLight position={[-10, -10, -10]} color="#9333ea" />
+      <ambientLight intensity={0.6} />
+      <pointLight position={[10, 10, 10]} intensity={1} />
+      <pointLight position={[-10, -10, -10]} color="#9333ea" intensity={0.5} />
+      <pointLight position={[0, 0, 10]} color="#10b981" intensity={0.3} />
       
-      <Center>
-        <Text3D
-          font="/fonts/Space_Grotesk_Bold.json"
-          size={0.8}
-          height={0.2}
-          curveSegments={12}
-          bevelEnabled
-          bevelThickness={0.02}
-          bevelSize={0.02}
-          bevelOffset={0}
-          bevelSegments={5}
-        >
-          ASTHA
-          <meshStandardMaterial color="#9333ea" />
-        </Text3D>
-      </Center>
+      <CentralTorus />
       
-      <FloatingCube position={[-3, 2, 0]} color="#10b981" />
-      <FloatingCube position={[3, 1, -1]} color="#3b82f6" />
-      <TechSphere position={[-2, -1, 2]} color="#f59e0b" />
-      <TechSphere position={[2, -2, 1]} color="#ef4444" />
+      <FloatingCube position={[-2.5, 1.5, 0]} color="#10b981" />
+      <FloatingCube position={[2.5, 1, -1]} color="#3b82f6" />
+      <TechSphere position={[-1.5, -1.5, 2]} color="#f59e0b" />
+      <TechSphere position={[1.8, -1.8, 1]} color="#ef4444" />
+      <TechSphere position={[0, 2.5, -1]} color="#06b6d4" />
       
-      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.3} />
     </>
   );
 };
