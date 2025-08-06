@@ -23,8 +23,8 @@ const Contact = () => {
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      value: 'linkedin.com/in/asthadixit-9b1b0b220',
-      href: 'https://www.linkedin.com/in/asthadixit-9b1b0b220'
+      value: 'linkedin.com/in/astha-dixit-9b1b0b220',
+      href: 'https://www.linkedin.com/in/astha-dixit-9b1b0b220'
     },
     {
       icon: MapPin,
@@ -134,7 +134,7 @@ const Contact = () => {
                   Download Resume
                 </motion.a>
                 <motion.a
-                  href="https://www.linkedin.com/in/asthadixit-9b1b0b220"
+                  href="https://www.linkedin.com/in/astha-dixit-9b1b0b220"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-4 py-2 border border-primary text-primary rounded-lg font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
